@@ -1,0 +1,41 @@
+SELECT 
+    s.id AS specificationID,
+    s.spec_en,
+    s.type,
+    s.json,
+    sc.spec_id
+FROM 
+    specifications AS s
+LEFT JOIN spec_cat_link as sc
+	ON s.id = sc.spec_id AND sc.category_id = 27
+LEFT JOIN prods_specs ps 
+   	ON s.id = ps.spec_id AND s.type = "checkbox"
+ORDER BY s.spec_en ASC
+
+
+/*
+INNER JOIN prod_cat_link pc
+	ON pc.virtuemart_product_id = 439
+LEFT JOIN prods_specs ps 
+   	ON s.id = ps.spec_id AND ps.product_id = 439
+ AND s.type = "checkbox"
+ORDER BY s.spec_en ASC */
+
+
+
+
+
+
+SELECT 
+    s.id AS specificationID,
+    s.spec_en,
+    s.type,
+    s.json,
+    ps.value
+FROM specifications AS s
+LEFT JOIN spec_cat_link sc
+	ON s.id = sc.spec_id
+LEFT JOIN prods_specs as ps
+	ON ps.spec_id = s.id AND ps.product_id = 439
+WHERE sc.category_id = 27
+AND s.type = 'checkbox'

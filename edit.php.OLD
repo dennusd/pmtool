@@ -1,0 +1,87 @@
+<?php 
+
+error_reporting( E_ALL );
+ini_set( 'display_errors', 1 );
+
+require_once( 'classes/class.Global.php' );
+
+$products = new Products();
+
+$dataset = $products->getProdGroup( $_POST['id'] );
+
+?>
+    <div id="close-notice" class="edit--popup-notice">
+        <h2>Notice!</h2>
+        <p>When copy/pasting text from a supplier, double-check any used quotes ( " ).<br>
+        Be sure you replace any <i>'italic'</i> quotes with normal quotes</p>
+        <p>This for technical reasons. You can click on this popup to close it!</p>
+        <p>Thank you! Kind regards,<br>
+        Dennis</p>
+    </div>
+    <form id="product" action="proces.php" method="post">
+        <input type="hidden" name="product_id" value="<?php echo $_POST['id']; ?>">
+        <div class="details">
+            <div style="width: 550px; min-width: 550px">
+                <?php echo $products->getDetails(); ?>
+            </div>
+            <div style="width: 550px; min-width: 550px">
+                <?php echo $products->getDetailsNL(); ?>
+            </div>
+            <div class="details--numerique" style="min-width: 610px; width: 610px;">
+                <h2>FEATURES ENGLISH</h2>
+                <div class="tiny-features">
+                    <textarea id="tinymce-features"><?php echo $products->getFeatures(); ?></textarea>
+                </div>
+                <h2>FEATURES NEDERLANDS</h2>
+                <div class="tiny-features">
+                    <textarea id="tinymce-features_nl"><?php echo $products->getFeaturesNL(); ?></textarea>
+                </div>
+                <h2>SPECIFICATIONS</h2>
+                <?php echo $products->getSpecs( $dataset, 'select' ); ?>
+                <?php echo $products->getSpecs( $dataset, 'field' ); ?>
+            </div>
+            <div style="width: 22%; min-width: 390px;">
+                <h2>SPECIFICATIONS</h2>
+                <?php echo $products->getSpecs( $dataset, 'checkbox' ); ?>
+            </div>
+        </div>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <p>ehh23h99e8h23e8923he8923eh9238he389</p>
+        <div class="details--cta-btns">
+            <div class="details--close" id="close">Close</div>
+            <div class="details--save" id="submitform">Save</div>
+        </div>
+
+    </form>
