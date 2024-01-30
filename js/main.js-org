@@ -1,0 +1,344 @@
+function destroyTinyMCE() {
+    if( tinyMCE.get( 'tinymceeditor' ) ){
+        tinymce.remove( '#tinymceeditor' );
+    }
+    if( tinyMCE.get( 'tinymceeditor_nl' ) ){
+        tinymce.remove( '#tinymceeditor_nl' );
+    }
+    if( tinyMCE.get( 'tinymce-features' ) ){
+        tinymce.remove( '#tinymce-features' );
+        console.log( 'succes: tinymce - removed' )
+    }                         
+    if( tinyMCE.get( 'tinymce-features_nl' ) ){
+        tinymce.remove( '#tinymce-features_nl' );
+        console.log( 'succes: tinymce - removed' )
+    }                         
+}
+
+function popup( state ) {
+    if( state == 'show' ) {
+        $( 'body' ).css( 'overflow', 'hidden' );
+        $( '.popup' ).removeClass( 'popup--hidden' );
+        console.log( 'succes: popup - show' );
+    } else {
+        $( 'body' ).css( 'overflow', 'visible' );
+        $( '.popup' ).addClass( 'popup--hidden' );
+        console.log( 'succes: popup - hide' );
+    }
+}
+
+                        $( '#close' ).on( 'click', function() {
+                            destroyTinyMCE();
+                      
+                            popup( 'hide' );
+                        });
+
+$(document).ready(function(){
+    var selected = localStorage.getItem( 'selected' );
+
+    if (selected) { 
+        $( '#cat-select' ).val( selected );
+    }
+
+    $( '#cat-select' ).change( function() {
+        localStorage.setItem( 'selected', $( this ).val() );
+        $( '#topbar-form' ).submit();
+    });
+
+
+    $( '.1item--pdf' ).on( 'click', function() {
+        var id      = $( this ).data( 'val' );
+
+        popup( 'show' );
+
+        $.ajax({
+            url: 'mpdf.php', 
+            type: 'POST',
+            data: { id: id },
+            success: function( result ){
+                console.log(id)
+                window.open();
+/*                var blob=new Blob([result], { type: "application/pdf" });
+                var link=document.createElement('a');
+                link.href=window.URL.createObjectURL(blob);
+                link.download="pdf"+id+".pdf";
+                link.click(); */
+                //$( '#popup--content' ).html( result );
+            } // end succes call $ajax
+        
+        }); // end $.ajax
+    });
+
+/*
+
+    Edit item / Open popup
+
+*/
+/*
+    $(document).on( 'change', '.quick-cat-select', function(event) { 
+        alert( 'Click' );
+    });
+*/
+
+
+    $( '.btn-saveitem' ).on( 'click', function() {
+        var id      = $( this ).data( 'saveitemid' );
+        //alert( 'Click'+id );
+
+        $.ajax({
+            url: 'saveitemcategory.php', 
+            type: 'POST',
+            data: $( '#form'+id ).serialize(),
+            success: function( result ){
+                $( '#itemstatus'+id ).html( result )
+                //alert( 'saved' );
+            } // end succes call $ajax
+        }); // end $.ajax
+    });
+
+
+    $( '.product-image' ).on( 'click', function() {
+        var pilinkid      = $( this ).data( 'pilink_id' );
+        var productid     = $( this ).data( 'product_id' );
+        //alert( 'Click'+pilinkid );
+
+        $.ajax({
+            url: 'setmainimage.php', 
+            type: 'POST',
+            data: { pilinkid: pilinkid,
+                    productid: productid },
+            // data: $( '#form_images'+productid ).serialize(),
+            success: function( result ){
+                $( '.imageupdate'+productid ).html( result );
+                // alert( 'Main image set' );
+                $( '#form_images'+productid+' .product-image' ).removeClass( 'main-image' );
+                $( '.product-image-'+pilinkid).addClass( 'main-image' );
+            } // end succes call $ajax
+        }); // end $.ajax
+    });
+
+
+    $( '.item--edit' ).on( 'click', function() {
+        var id      = $( this ).data( 'val' );
+        var cat     = $( this ).data( 'cat' );
+
+        popup( 'show' );
+
+        $.ajax({
+            url: 'edit.php', 
+            type: 'POST',
+            data: { id: id,
+                    cat: cat },
+            success: function( result ){
+                $(document).on( 'change', 'input:checkbox', function(event) { 
+                    var checkbox = $(this).attr('id');
+
+                    if( this.checked == true) {
+                        $('#' + checkbox).val('on');
+                    } else {
+                        $('#' + checkbox).val('off');            
+                    }
+                });
+
+                $( '#popup--content' ).html( result );
+                $( 'textarea#tinymceeditor' ).tinymce({
+                    height: 500,
+                    menubar: true,
+                    plugins: [
+                    'advlist autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount'
+                    ],
+                    toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
+                });
+                $( 'textarea#tinymceeditor_nl' ).tinymce({
+                    height: 500,
+                    menubar: true,
+                    plugins: [
+                    'advlist autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount'
+                    ],
+                    toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
+                });
+                $( 'textarea#tinymce-features' ).tinymce({
+                    height: 500,
+                    menubar: false,
+                    force_p_newlines : false,
+                    forced_root_block : '',
+                    plugins: [
+                    'autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount'
+                    ],
+                    toolbar: 'undo redo bullist | removeformat'
+                });
+                $( 'textarea#tinymce-features_nl' ).tinymce({
+                    height: 500,
+                    menubar: false,
+                    force_p_newlines : false,
+                    forced_root_block : '', 
+                    plugins: [
+                    'autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount'
+                    ],
+                    toolbar: 'undo redo bullist | removeformat'
+                });
+                $( '#close' ).on( 'click', function() {
+                    destroyTinyMCE();
+                    popup( 'hide' );
+                });
+
+                $( '#submitform' ).on( 'click', function() {
+                    var content_description = tinyMCE.get( 'tinymceeditor' ).getContent();
+                    var content_features    = tinyMCE.get( 'tinymce-features' ).getContent();
+                    var content_description_nl = tinyMCE.get( 'tinymceeditor_nl' ).getContent();
+                    var content_features_nl    = tinyMCE.get( 'tinymce-features_nl' ).getContent();
+
+                    localStorage.setItem( "productText", content_description );
+                    localStorage.setItem( "product_features", content_features );
+                    localStorage.setItem( "productText_nl", content_description_nl );
+                    localStorage.setItem( "product_features_nl", content_features_nl );
+                    tinyMCE.triggerSave();
+                    $( '#tinymceeditor' ).tinymce().save();
+                    $( '#tinymce-features' ).tinymce().save();
+                    $( '<input />' ).attr( 'type', 'hidden' )
+                                    .attr( 'name', 'product_desc' )
+                                    .attr( 'value', content_description )
+                                    .appendTo( '#product' );
+                         // return true;
+                    $( '<input />' ).attr( 'type', 'hidden' )
+                                    .attr( 'name', 'product_features' )
+                                    .attr( 'value', content_features )
+                                    .appendTo( '#product' );
+                    $( '<input />' ).attr( 'type', 'hidden')
+                                    .attr( 'name', 'product_desc_nl' )
+                                    .attr( 'value', content_description_nl )
+                                    .appendTo( '#product' );
+                         // return true;
+                    $( '<input />' ).attr( 'type', 'hidden' )
+                                    .attr( 'name', 'product_features_nl' )
+                                    .attr( 'value', content_features_nl )
+                                    .appendTo( '#product' );
+                         // return true;
+
+                    destroyTinyMCE();                        
+
+                    $.ajax({
+                        url: 'proces.php', 
+                        type: 'POST',
+                        data: $( '#product' ).serialize(),
+                        success: function( result ){
+                            $( '#popup--content' ).html( result )
+
+                            $( '#close' ).on( 'click', function() {
+                                destroyTinyMCE();
+                          
+                                popup( 'hide' );
+                            });
+
+                            $.ajax({
+                                url: 'item.php', 
+                                type: 'POST',
+                                data: { id: id },
+                                success: function( result ){
+                                    $( '#item-'+id ).html( result )
+
+                                } // end succes call $ajax
+                            }); // end $.ajax
+
+
+                        } // end succes call $ajax
+                    }); // end $.ajax
+
+                    //$( '.popup' ).toggleClass( 'popup--hidden' );
+                    //$( 'body' ).css( 'overflow', 'visible' );
+
+                    /*
+                    var content_description = tinyMCE.get('tinymceeditor').getContent();
+                    var content_features = tinyMCE.get('tinymce-features').getContent();
+
+                    localStorage.setItem( "productText", content_description );
+                    localStorage.setItem( "product_features", content_features );
+                    tinyMCE.triggerSave();
+                    $('#tinymceeditor').tinymce().save();
+                    $('#tinymce-features').tinymce().save();
+                    $("<input />").attr("type", "hidden")
+                              .attr("name", "product_desc")
+                              .attr("value", content_description)
+                              .appendTo("#product");
+                         // return true;
+                    $("<input />").attr("type", "hidden")
+                              .attr("name", "product_features")
+                              .attr("value", content_features)
+                              .appendTo("#product");
+                         // return true;
+                    $( '#product' ).submit();
+                    */
+                });
+
+            } // end succes call $ajax
+        
+        }); // end $.ajax
+
+
+    })  
+
+// Close item/popup
+    $( '#open-configurator' ).on( 'click', function() {
+        popup( 'show' );
+
+        $.ajax({
+            url: 'configurator.php', 
+            type: 'POST',
+            data: { },
+            success: function( result ){
+                $( '#popup--content' ).html( result );
+
+                $(document).on( 'change', 'select#hose', function(event) { 
+
+                    var pid = $(this).val()
+
+                    $.ajax({
+                        url: 'configurator-image.php', 
+                        type: 'POST',
+                        data: { pid: pid },
+                        success: function( result ){
+                            $( '#hose-image' ).html( result );
+                        }
+                    });
+                });
+
+                $(document).on( 'change', 'select#fitting1', function(event) { 
+                    var pid = $(this).val()
+
+                    $.ajax({
+                        url: 'configurator-image.php', 
+                        type: 'POST',
+                        data: { pid: pid },
+                        success: function( result ){
+                            $( '#fitting1-image' ).html( result );
+                        }
+                    });
+                });
+
+                $(document).on( 'change', 'select#fitting2', function(event) { 
+                    var pid = $(this).val()
+
+                    $.ajax({
+                        url: 'configurator-image.php', 
+                        type: 'POST',
+                        data: { pid: pid },
+                        success: function( result ){
+                            $( '#fitting2-image' ).html( result );
+                        }
+                    });
+                });
+
+
+            }
+        });
+    });
+
+});

@@ -1,0 +1,181 @@
+body {
+	padding: 0;
+	margin: 0;
+
+	font-size: 9pt;
+}
+
+.header {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	height: 1.6cm; 
+
+	background: cmyk( 0, 95, 100, 0 );
+	text-align: left;
+	color: white; 
+
+	padding-left: 1.4cm;
+}
+	h1 {
+		text-transform: uppercase;
+		margin: 5mm 0 0; padding: 0;
+		font-family: eurostile;
+		font-size: 18pt;
+	}
+	h2 {
+		text-transform: uppercase;
+		font-family: eurostile;
+		font-size: .6cm;
+	}
+	h3 {
+		text-transform: uppercase;
+		font-family: eurostile;
+		font-size: .6cm;
+	}
+.short-desc {
+	position: absolute;
+	top: 2cm;
+	left: 1.4cm;
+	font-size: 9pt;
+}
+.line {
+	position: absolute;
+	top: 2.6cm;
+	left: 1.4cm; right: 1.4cm;
+	border-bottom: 1px solid red;
+	height: 1px;
+
+}
+.first-paragraph {
+	position: absolute;
+	top: 3cm;
+	left: 1.4cm;
+	width: 12cm;
+
+	font-weight: bold;
+	font-size: 9pt;
+	line-height: 1.5;
+}
+.rxcode {
+	position: absolute;
+	right: 1.4cm;
+	top: 3cm;
+	width: 1.5cm;
+	height: 1cm;
+	background-color: #19ae3c;
+	color: white;
+	line-height: 1cm;
+	text-align: center;
+
+	font-family: eurostile;
+	text-transform: uppercase;
+	font-size: 13pt;
+
+}
+.content {
+	position: absolute;
+	left: 1.4cm;
+	top: 6.3cm;
+	width: 12cm;
+
+	line-height: 1.5;
+}
+	.content p {
+		margin-bottom: 1cm;
+	}
+
+.content-image {
+	position: absolute;
+	top: 5cm;
+	right: 1.4cm;
+	width: 6cm;
+
+}
+.photo {
+	float: right;
+	width: 10cm;
+	height: 10cm;
+	margin-left: 0cm;
+	margin-right: 0cm;
+}
+.techinfo-header {
+	position: absolute;
+	width: 7.8cm;
+	z-index: 9999;
+	top: 18.5cm; right: 2.8cm;
+}
+.techinfo-container {
+	position: absolute;
+	width: 7.8cm;
+	z-index: 9999;
+	top: 20cm; right: 1.4cm;
+}
+.features-container {
+	position: absolute;
+	width: 8.6cm;
+	z-index: 9999;
+	top: 20cm; left: 1.4cm; right: 0cm;
+	background: cmyk( 0, 95, 100, 0 );
+}
+.features {
+	width: 8.6cm;
+}
+	.features h2 {
+		color: white;
+		padding-left: 0.3cm;
+	}
+
+.featureslist {
+	list-style: none;
+	padding: 0.3cm;
+	background: cmyk( 0, 95, 100, 0 );
+	color: white;
+}
+	.featuresli {
+		color: white;
+		font-weight: bold;
+		line-height: 1.5;
+	}
+
+.technicalinformation {
+	margin-top: 2cm;
+}
+
+
+table {
+	font-size: 8pt;
+	margin-left: -1.5cm;
+	background-color: cmyk( 9, 6, 7, 0 );
+	color: black;
+}
+
+.footer {
+	position: absolute;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	height: 1.5cm; line-height: 1cm;
+
+	text-align: center;
+	color: white; 
+	/* background: cmyk( 0, 95, 100, 0 );
+	padding-left: 1.4cm; */
+}
+	.footer--image {
+		position: absolute;
+		left: 0; right: 0; bottom: .5m;
+		width: 90%;
+	}
+	.company {
+		margin-right: 1cm;
+	}
+	.phone {
+		color: #fff;
+		font-family: "fasolid";
+		display: block;
+		content: '\f095';
+		width: 1cm; height: 1cm;
+		margin-left: 3cm;
+	}
